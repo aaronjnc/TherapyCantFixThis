@@ -2,18 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class BaseEnemy : MonoBehaviour
 {
     private PlayerCharacter character;
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private float speed;
+
+    public void SetPlayer(PlayerCharacter character)
     {
-        character = FindObjectOfType<PlayerCharacter>();
+        this.character = character;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        if (character)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, character.transform.position, Time.deltaTime*speed);
+        }
     }
 }
