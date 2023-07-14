@@ -129,7 +129,8 @@ GameObject:
   - component: {fileID: 6166596492441024875}
   - component: {fileID: 6166596492441024876}
   - component: {fileID: 6166596492441024877}
-  m_Layer: 0
+  - component: {fileID: 1043052093011290248}
+  m_Layer: 3
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,3 +240,22 @@ MonoBehaviour:
   speed: 5
   dampTime: 0.5
   cam: {fileID: 6166596491072975847}
+  maxHealth: 100
+  bullet: {fileID: 7538168524875572697, guid: 888458b54260cf64f8cf7fa65299e524, type: 3}
+  bulletSpeed: 5
+--- !u!58 &1043052093011290248
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6166596492441024878}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
