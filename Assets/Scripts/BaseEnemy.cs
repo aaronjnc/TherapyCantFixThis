@@ -8,6 +8,8 @@ public class BaseEnemy : MonoBehaviour
     private PlayerCharacter character;
     [SerializeField]
     private float speed;
+    [SerializeField]
+    private float damage;
 
     public void SetPlayer(PlayerCharacter character)
     {
@@ -20,6 +22,16 @@ public class BaseEnemy : MonoBehaviour
         if (character)
         {
             transform.position = Vector3.MoveTowards(transform.position, character.transform.position, Time.deltaTime*speed);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        PlayerCharacter hitPlayer = collision.gameObject.GetComponent<PlayerCharacter>();
+        if (hitPlayer)
+        {
+            hitPlayer.HitPlayer(damage);
+            Destroy(gameObject);
         }
     }
 }
