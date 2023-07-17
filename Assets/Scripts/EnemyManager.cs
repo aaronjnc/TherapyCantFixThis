@@ -23,6 +23,7 @@ public class EnemyManager : Singleton<EnemyManager>
     private float MAX_SPAWN_TIME = 3;
     int spawns = 0;
     int enemiesSpawned = 1;
+    private bool fearful;
 
     [Serializable]
     public struct EnemyStruct
@@ -30,6 +31,7 @@ public class EnemyManager : Singleton<EnemyManager>
         public EnemyType enemyType;
         public float speed;
         public float damage;
+        public Material material;
     } 
 
     public enum EnemyType
@@ -64,7 +66,19 @@ public class EnemyManager : Singleton<EnemyManager>
         GameObject newEnemy = Instantiate(enemyPrefab, pos, Quaternion.identity);
         BaseEnemy enemyScript = newEnemy.GetComponent<BaseEnemy>();
         enemies.Add(enemyScript);
-        enemyScript.SetInfo(character, enemyMap[EnemyType.Anger]);
+        enemyScript.SetInfo(character, enemyTypes[UnityEngine.Random.Range(0, enemyTypes.Count)]);
+    }
+
+    void SpawnFearEnemy()
+    {
+        float distance = UnityEngine.Random.Range(MIN_DISTANCE, MAX_DISTANCE);
+        float angle = UnityEngine.Random.Range(0, 360);
+        Vector3 pos = new Vector3(distance * Mathf.Sin(angle), distance * Mathf.Cos(angle), 0);
+        GameObject newEnemy = Instantiate(enemyPrefab, pos, Quaternion.identity);
+        BaseEnemy enemyScript = newEnemy.GetComponent<BaseEnemy>();
+        enemies.Add(enemyScript);
+        enemyScript.SetInfo(character, enemyTypes[UnityEngine.Random.Range(0, enemyTypes.Count)]);
+        enemyScript.SetFearEnemy();
     }
 
     IEnumerator SpawnWait()
@@ -83,6 +97,15 @@ public class EnemyManager : Singleton<EnemyManager>
         {
             enemiesSpawned++;
         }
+        if (fearful)
+        {
+            SpawnFearEnemy();
+        }
         StartCoroutine("SpawnWait");
+    }
+
+    public void SetFearful(bool isFearful)
+    {
+        fearful = isFearful;
     }
 }

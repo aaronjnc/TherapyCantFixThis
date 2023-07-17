@@ -159,6 +159,19 @@ MonoBehaviour:
   - enemyType: 3
     speed: 15
     damage: 15
+    material: {fileID: 2100000, guid: 314d3a232d9c4944683f1e6ac62255dd, type: 2}
+  - enemyType: 2
+    speed: 15
+    damage: 15
+    material: {fileID: 2100000, guid: 1e0f483d790094a45abf153ace3e5ee0, type: 2}
+  - enemyType: 0
+    speed: 15
+    damage: 15
+    material: {fileID: 2100000, guid: ea91e15cb09d02c4492cc8565ed2fcbf, type: 2}
+  - enemyType: 1
+    speed: 15
+    damage: 15
+    material: {fileID: 2100000, guid: b48bc4e4413f631499da245836431a8b, type: 2}
   MIN_SPAWN_TIME: 0.5
   MAX_SPAWN_TIME: 2
 --- !u!4 &794195271

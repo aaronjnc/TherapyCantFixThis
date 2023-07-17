@@ -93,6 +93,7 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
         health -= enemyAttack.damage;
         if (health <= 0)
         {
+            controller.Disable();
             Destroy(gameObject);
         }
         switch (enemyAttack.enemyType)
@@ -102,6 +103,12 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
                 break;
             case EnemyManager.EnemyType.Anger:
                 accuracy = 30;
+                break;
+            case EnemyManager.EnemyType.Happiness:
+                cam.orthographicSize = 5;
+                break;
+            case EnemyManager.EnemyType.Fear:
+                EnemyManager.Instance.SetFearful(true);
                 break;
         }
     }

@@ -32,6 +32,11 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        BaseEnemy baseEnemy = collision.gameObject.GetComponent<BaseEnemy>();
+        if (baseEnemy.GetFearEnemy())
+        {
+            return;
+        }
         PlayerCharacter.Instance.AddAmmo();
         Destroy(collision.gameObject);
         Destroy(gameObject);
