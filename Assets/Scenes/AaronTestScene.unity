@@ -159,6 +159,8 @@ MonoBehaviour:
   - enemyType: 3
     speed: 15
     damage: 15
+  MIN_SPAWN_TIME: 0.5
+  MAX_SPAWN_TIME: 2
 --- !u!4 &794195271
 Transform:
   m_ObjectHideFlags: 0
@@ -424,12 +426,16 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6166596492441024877, guid: 6e174a1c08a43614091a7b0a72489e61, type: 3}
+      propertyPath: MAX_AMMO
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6166596492441024877, guid: 6e174a1c08a43614091a7b0a72489e61, type: 3}
       propertyPath: maxHealth
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6166596492441024877, guid: 6e174a1c08a43614091a7b0a72489e61, type: 3}
       propertyPath: bulletSpeed
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e174a1c08a43614091a7b0a72489e61, type: 3}
