@@ -27,6 +27,9 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
     private float bulletSpeed;
     private float speedMod = 1;
     private float accuracy = 0;
+    [SerializeField]
+    private int MAX_AMMO;
+    private int ammo;
 
     // Start is called before the first frame update
     protected override void Awake()
@@ -36,6 +39,7 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
         health = maxHealth;
         rb = GetComponent<Rigidbody2D>();
         controller = new InputController();
+        ammo = MAX_AMMO;
         controller.PlayerCore.Movement.performed += Move;
         controller.PlayerCore.Movement.canceled += StopMove;
         controller.PlayerCore.Movement.Enable();
@@ -46,7 +50,7 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
     void Move(CallbackContext ctx)
     {
         Vector3 dir = ctx.ReadValue<Vector2>().normalized;
-        rb.velocity = dir * speed * speedMod;
+        rb.velocity = speed * speedMod * dir;
     }
 
     void StopMove(CallbackContext ctx)
@@ -56,6 +60,10 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
 
     void Attack(CallbackContext ctx)
     {
+        if (ammo == 0)
+        {
+            return;
+        }
         Vector3 mouseScreenPos = new Vector3(Mouse.current.position.x.ReadValue(), Mouse.current.position.y.ReadValue(), 0);
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
         mouseWorldPos.z = transform.position.z;
@@ -68,6 +76,7 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
             Vector3 bulletVel = newBullet.transform.right * bulletSpeed + new Vector3(rb.velocity.x, rb.velocity.y, 0);
             newBullet.SetVelocity(bulletVel);
         }
+        ammo--;
     }
 
     private void FixedUpdate()
@@ -95,5 +104,10 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
                 accuracy = 30;
                 break;
         }
+    }
+
+    public void AddAmmo()
+    {
+        ammo++;
     }
 }

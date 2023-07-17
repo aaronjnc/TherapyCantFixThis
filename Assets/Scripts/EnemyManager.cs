@@ -17,6 +17,12 @@ public class EnemyManager : Singleton<EnemyManager>
     [SerializeField]
     List<EnemyStruct> enemyTypes = new List<EnemyStruct>();
     Dictionary<EnemyType, EnemyStruct> enemyMap = new Dictionary<EnemyType, EnemyStruct>();
+    [SerializeField]
+    private float MIN_SPAWN_TIME = 1;
+    [SerializeField]
+    private float MAX_SPAWN_TIME = 3;
+    int spawns = 0;
+    int enemiesSpawned = 1;
 
     [Serializable]
     public struct EnemyStruct
@@ -47,6 +53,7 @@ public class EnemyManager : Singleton<EnemyManager>
     {
         character = PlayerCharacter.Instance;
         SpawnEnemy();
+        StartCoroutine("SpawnWait");
     }
 
     void SpawnEnemy()
@@ -58,5 +65,24 @@ public class EnemyManager : Singleton<EnemyManager>
         BaseEnemy enemyScript = newEnemy.GetComponent<BaseEnemy>();
         enemies.Add(enemyScript);
         enemyScript.SetInfo(character, enemyMap[EnemyType.Anger]);
+    }
+
+    IEnumerator SpawnWait()
+    {
+        yield return new WaitForSeconds(UnityEngine.Random.Range(MIN_SPAWN_TIME, MAX_SPAWN_TIME));
+        for (int i = 0; i < enemiesSpawned; i++)
+        {
+            SpawnEnemy();
+        }
+        spawns += 1;
+        if (spawns % 10 == 0)
+        {
+            MIN_SPAWN_TIME -= .1f;
+        }
+        if (spawns % 15 == 0)
+        {
+            enemiesSpawned++;
+        }
+        StartCoroutine("SpawnWait");
     }
 }
