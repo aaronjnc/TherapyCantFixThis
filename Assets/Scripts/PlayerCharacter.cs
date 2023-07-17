@@ -25,7 +25,9 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
     GameObject bullet;
     [SerializeField]
     private float bulletSpeed;
-    
+    private float speedMod = 1;
+    private float accuracy = 0;
+
     // Start is called before the first frame update
     protected override void Awake()
     {
@@ -43,7 +45,8 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
 
     void Move(CallbackContext ctx)
     {
-        rb.velocity = ctx.ReadValue<Vector2>() * speed;
+        Vector3 dir = ctx.ReadValue<Vector2>().normalized;
+        rb.velocity = dir * speed * speedMod;
     }
 
     void StopMove(CallbackContext ctx)
@@ -53,16 +56,17 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
 
     void Attack(CallbackContext ctx)
     {
-        Vector3 mousePos = Mouse.current.position.ReadValue();
-        mousePos.z = Camera.main.nearClipPlane;
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
-        Projectile newBullet = Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Projectile>();
+        Vector3 mouseScreenPos = new Vector3(Mouse.current.position.x.ReadValue(), Mouse.current.position.y.ReadValue(), 0);
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
+        mouseWorldPos.z = transform.position.z;
         Vector3 dir = mouseWorldPos - transform.position;
-        dir.z = 0;
-        dir.Normalize();
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        float finalAngle = UnityEngine.Random.Range(angle - accuracy, angle + accuracy);
+        Projectile newBullet = Instantiate(bullet, transform.position, Quaternion.Euler(0,0, finalAngle)).GetComponent<Projectile>();
         if (newBullet)
         {
-            newBullet.SetVelocity(dir * bulletSpeed);
+            Vector3 bulletVel = newBullet.transform.right * bulletSpeed + new Vector3(rb.velocity.x, rb.velocity.y, 0);
+            newBullet.SetVelocity(bulletVel);
         }
     }
 
@@ -75,12 +79,21 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
 		cam.transform.position = Vector3.SmoothDamp(cam.transform.position, destination, ref velocity, dampTime);
     }
 
-    public void HitPlayer(float damage)
+    public void HitPlayer(EnemyManager.EnemyStruct enemyAttack)
     {
-        health -= damage;
+        health -= enemyAttack.damage;
         if (health <= 0)
         {
             Destroy(gameObject);
+        }
+        switch (enemyAttack.enemyType)
+        {
+            case EnemyManager.EnemyType.Sadness:
+                speedMod *= .5f;
+                break;
+            case EnemyManager.EnemyType.Anger:
+                accuracy = 30;
+                break;
         }
     }
 }
