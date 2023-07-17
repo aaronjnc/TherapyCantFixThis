@@ -155,6 +155,10 @@ MonoBehaviour:
   enemyPrefab: {fileID: 2336308098238659361, guid: ce97872be29065e489221d85724a568d, type: 3}
   MIN_DISTANCE: 10
   MAX_DISTANCE: 15
+  enemyTypes:
+  - enemyType: 3
+    speed: 15
+    damage: 15
 --- !u!4 &794195271
 Transform:
   m_ObjectHideFlags: 0
@@ -408,8 +412,16 @@ PrefabInstance:
       value: MainCamera
       objectReference: {fileID: 0}
     - target: {fileID: 6166596491072975847, guid: 6e174a1c08a43614091a7b0a72489e61, type: 3}
+      propertyPath: orthographic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6166596491072975847, guid: 6e174a1c08a43614091a7b0a72489e61, type: 3}
       propertyPath: field of view
-      value: 80
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 6166596491072975847, guid: 6e174a1c08a43614091a7b0a72489e61, type: 3}
+      propertyPath: orthographic size
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6166596492441024877, guid: 6e174a1c08a43614091a7b0a72489e61, type: 3}
       propertyPath: maxHealth
@@ -417,7 +429,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6166596492441024877, guid: 6e174a1c08a43614091a7b0a72489e61, type: 3}
       propertyPath: bulletSpeed
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e174a1c08a43614091a7b0a72489e61, type: 3}

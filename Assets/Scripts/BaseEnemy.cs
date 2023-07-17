@@ -10,10 +10,12 @@ public class BaseEnemy : MonoBehaviour
     private float speed;
     [SerializeField]
     private float damage;
+    private EnemyManager.EnemyStruct enemyInfo;
 
-    public void SetPlayer(PlayerCharacter character)
+    public void SetInfo(PlayerCharacter character, EnemyManager.EnemyStruct enemyInfo)
     {
         this.character = character;
+        this.enemyInfo = enemyInfo;
     }
 
     // Update is called once per frame
@@ -30,7 +32,7 @@ public class BaseEnemy : MonoBehaviour
         PlayerCharacter hitPlayer = collision.gameObject.GetComponent<PlayerCharacter>();
         if (hitPlayer)
         {
-            hitPlayer.HitPlayer(damage);
+            hitPlayer.HitPlayer(enemyInfo);
             Destroy(gameObject);
         }
     }
