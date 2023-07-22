@@ -47,6 +47,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 2336308098238659361, guid: ce97872be29065e489221d85724a568d, type: 3}
   MIN_DISTANCE: 10
   MAX_DISTANCE: 15
+  MAX_ENEMIES_SPAWNED: 5
   enemyTypes:
   - enemyType: 3
     speed: 2
@@ -70,3 +71,4 @@ MonoBehaviour:
     animatorController: {fileID: 9100000, guid: 0a4e25f1b94e9bd49947ada57b090b88, type: 2}
   MIN_SPAWN_TIME: 2
   MAX_SPAWN_TIME: 5
+  fearSpawnTime: 8

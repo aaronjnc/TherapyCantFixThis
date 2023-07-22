@@ -10,10 +10,12 @@ using TMPro;
 using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(EnemyEffects))]
 public class PlayerCharacter : Singleton<PlayerCharacter>
 {
     InputController controller;
     Rigidbody2D rb;
+    EnemyEffects enemyEffects;
     SpriteRenderer spriteRenderer;
     [SerializeField]
     SpriteRenderer armRenderer;
@@ -59,6 +61,7 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
         health = maxHealth;
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        enemyEffects = GetComponent<EnemyEffects>();
         controller = new InputController();
         ammo = maxAmmo;
         healthSlider.maxValue = maxHealth;
@@ -146,21 +149,7 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
             Destroy(spriteRenderer);
             Destroy(armRenderer);
         }
-        switch (enemyAttack.enemyType)
-        {
-            case EnemyManager.EnemyType.Sadness:
-                speedMod *= .5f;
-                break;
-            case EnemyManager.EnemyType.Anger:
-                accuracy = 30;
-                break;
-            case EnemyManager.EnemyType.Happiness:
-                cam.orthographicSize = 5;
-                break;
-            case EnemyManager.EnemyType.Fear:
-                EnemyManager.Instance.SetFearful(true);
-                break;
-        }
+        enemyEffects.AddEffect(enemyAttack.enemyType);
     }
 
     public void AddAmmo()
@@ -197,5 +186,20 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(0);
+    }
+
+    public void SetSpeedMod(float newSpeedMod)
+    {
+        speedMod = newSpeedMod;
+    }
+
+    public void SetOrthographicSize(float newOrthographicSize)
+    {
+        cam.orthographicSize = newOrthographicSize;
+    }
+
+    public void SetAccuracy(float newAccuracy)
+    {
+        accuracy = newAccuracy;
     }
 }
