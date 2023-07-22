@@ -30,6 +30,8 @@ public class BaseEnemy : MonoBehaviour
     public void SetFearEnemy()
     {
         fearEnemy = true;
+        Color c = spriteRenderer.color;
+        spriteRenderer.color = new Color(c.r, c.g, c.b, 120);
     }
 
     public bool GetFearEnemy()

@@ -34931,7 +34931,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1594503840587810438, guid: 6e174a1c08a43614091a7b0a72489e61, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1625995656787974079, guid: 6e174a1c08a43614091a7b0a72489e61, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1656220930781043763, guid: 6e174a1c08a43614091a7b0a72489e61, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1987564470413248920, guid: 6e174a1c08a43614091a7b0a72489e61, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2838050002614236925, guid: 6e174a1c08a43614091a7b0a72489e61, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3003056357905953878, guid: 6e174a1c08a43614091a7b0a72489e61, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3032912986914734725, guid: 6e174a1c08a43614091a7b0a72489e61, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -35022,6 +35046,14 @@ PrefabInstance:
     - target: {fileID: 6365729152038829605, guid: 6e174a1c08a43614091a7b0a72489e61, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6887104592599199410, guid: 6e174a1c08a43614091a7b0a72489e61, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754070670912532460, guid: 6e174a1c08a43614091a7b0a72489e61, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8937018172026074118, guid: 6e174a1c08a43614091a7b0a72489e61, type: 3}
       propertyPath: m_SizeDelta.x

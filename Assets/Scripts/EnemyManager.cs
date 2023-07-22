@@ -14,6 +14,8 @@ public class EnemyManager : Singleton<EnemyManager>
     private float MIN_DISTANCE = 5;
     [SerializeField]
     private float MAX_DISTANCE = 15;
+    [SerializeField]
+    private int MAX_ENEMIES_SPAWNED = 5;
     List<BaseEnemy> enemies = new List<BaseEnemy>();
     [SerializeField]
     List<EnemyStruct> enemyTypes = new List<EnemyStruct>();
@@ -24,7 +26,10 @@ public class EnemyManager : Singleton<EnemyManager>
     private float MAX_SPAWN_TIME = 3;
     int spawns = 0;
     int enemiesSpawned = 1;
-    private bool fearful;
+    private float fearLevel;
+    [SerializeField]
+    private float fearSpawnTime;
+    bool bFearCouritineRunning = false;
 
     [Serializable]
     public struct EnemyStruct
@@ -90,6 +95,11 @@ public class EnemyManager : Singleton<EnemyManager>
     IEnumerator SpawnWait()
     {
         yield return new WaitForSeconds(UnityEngine.Random.Range(MIN_SPAWN_TIME, MAX_SPAWN_TIME));
+        float enemiesToSpawn = enemiesSpawned;
+        if (fearLevel < 0)
+        {
+            enemiesToSpawn = Mathf.Clamp(enemiesToSpawn + fearLevel, 1, MAX_ENEMIES_SPAWNED);
+        }
         for (int i = 0; i < enemiesSpawned; i++)
         {
             SpawnEnemy();
@@ -97,21 +107,37 @@ public class EnemyManager : Singleton<EnemyManager>
         spawns += 1;
         if (spawns % 10 == 0)
         {
-            MIN_SPAWN_TIME -= .1f;
+            MIN_SPAWN_TIME = Mathf.Clamp(MIN_SPAWN_TIME - .1f, .5f, MAX_SPAWN_TIME);
         }
         if (spawns % 15 == 0)
         {
-            enemiesSpawned++;
-        }
-        if (fearful)
-        {
-            SpawnFearEnemy();
+            enemiesSpawned = Mathf.Clamp(enemiesSpawned + 1, 1, MAX_ENEMIES_SPAWNED);
         }
         StartCoroutine("SpawnWait");
     }
 
-    public void SetFearful(bool isFearful)
+    public void SetFearful(float fearLevel)
     {
-        fearful = isFearful;
+        if (!bFearCouritineRunning)
+        {
+            SpawnFearEnemy();
+            bFearCouritineRunning = true;
+            StartCoroutine("SpawnFearWait");
+        }
+        this.fearLevel = fearLevel;
+    }
+
+    IEnumerator SpawnFearWait()
+    {
+        yield return new WaitForSeconds(fearSpawnTime - fearLevel);
+        if (fearLevel > 0)
+        {
+            SpawnFearEnemy();
+            StartCoroutine("SpawnFearWait");
+        }
+        else
+        {
+            bFearCouritineRunning = false;
+        }
     }
 }

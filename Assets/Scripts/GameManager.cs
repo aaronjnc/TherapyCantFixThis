@@ -5,16 +5,21 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
+    [Header("Health")]
     [SerializeField]
     private float defaultHealth = 0;
     private float currentHealth = 0;
     [SerializeField]
     private float maxHealth = 0;
+
+    [Header("Fire Rate")]
     [SerializeField]
     private float defaultFireRate = 0;
     private float currentFireRate = 0;
     [SerializeField]
     private float maxFireRate = 0;
+
+    [Header("Speed")]
     [SerializeField]
     private float defaultSpeed = 0;
     private float currentSpeed = 0;
@@ -22,12 +27,15 @@ public class GameManager : Singleton<GameManager>
     private float maxSpeedValue = 0;
     [SerializeField]
     private float maxSpeed = 0;
+
+    [Header("Ammo")]
     [SerializeField]
     private int defaultAmmo = 0;
     private int currentAmmo = 0;
     [SerializeField]
     private int maxAmmo = 0;
-    
+
+    [Header("Points")]
     [SerializeField]
     private int points = 0;
     [SerializeField]
