@@ -95,11 +95,6 @@ public class EnemyManager : Singleton<EnemyManager>
     IEnumerator SpawnWait()
     {
         yield return new WaitForSeconds(UnityEngine.Random.Range(MIN_SPAWN_TIME, MAX_SPAWN_TIME));
-        float enemiesToSpawn = enemiesSpawned;
-        if (fearLevel < 0)
-        {
-            enemiesToSpawn = Mathf.Clamp(enemiesToSpawn + fearLevel, 1, MAX_ENEMIES_SPAWNED);
-        }
         for (int i = 0; i < enemiesSpawned; i++)
         {
             SpawnEnemy();

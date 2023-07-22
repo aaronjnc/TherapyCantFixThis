@@ -47,6 +47,7 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
     private GameObject playerHUD;
     [SerializeField]
     private Button sameStats;
+    private bool bCanShoot = true;
 
     // Start is called before the first frame update
     protected override void Awake()

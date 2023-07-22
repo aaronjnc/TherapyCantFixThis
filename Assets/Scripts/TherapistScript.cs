@@ -7,6 +7,13 @@ using UnityEngine.SceneManagement;
 
 public class TherapistScript : MonoBehaviour
 {
+    [Header("Therapist")]
+    [SerializeField]
+    private List<string> therapistLines = new List<string>();
+    [SerializeField]
+    private TMP_Text therapistTextBox;
+
+
     [SerializeField]
     private TMP_Text pointsText;
 
@@ -51,7 +58,9 @@ public class TherapistScript : MonoBehaviour
         fireRateText.text = gameManager.GetFireRate() + "";
         speedText.text = gameManager.GetSpeed() + "";
         ammoText.text = gameManager.GetAmmo() + "";
-        pointsText.text = gameManager.GetPoints() + "";
+        pointsText.text = "Points: " + gameManager.GetPoints();
+        therapistTextBox.text = therapistLines[UnityEngine.Random.Range(0, therapistLines.Count)];
+        AdjustPoints(0);
     }
 
     public void StartGame()
@@ -59,18 +68,23 @@ public class TherapistScript : MonoBehaviour
         SceneManager.LoadScene(2);
     }
 
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     private void AdjustPoints(int val)
     {
         int points = gameManager.AdjustPoints(val);
-        pointsText.text = points + "";
-        if (points < gameManager.GetUpgradeCost() && val < 0)
+        pointsText.text = "Points: " + points;
+        if (points < gameManager.GetUpgradeCost() && val <= 0)
         {
             addAmmo.interactable = false;
             addSpeed.interactable = false;
             addHealth.interactable = false;
             addFireRate.interactable = false;
         }
-        else if (points >= gameManager.GetUpgradeCost() && val > 0)
+        else if (points >= gameManager.GetUpgradeCost() && val >= 0)
         {
             addAmmo.interactable = true;
             addSpeed.interactable = true;

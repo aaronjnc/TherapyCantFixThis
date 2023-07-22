@@ -21,7 +21,6 @@ public class Singleton<T> : MonoBehaviour where T: Component
                 {
                     GameObject go = new GameObject();
                     _instance = go.AddComponent<T>();
-                    Debug.Log("Generating new singleton");
                 }
             }
             return _instance;
@@ -29,6 +28,10 @@ public class Singleton<T> : MonoBehaviour where T: Component
     }
     protected virtual void Awake()
     {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
         Application.quitting += () => applicationIsQuitting = true;
         _instance = this as T;
     }

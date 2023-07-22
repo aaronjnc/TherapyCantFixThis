@@ -50,8 +50,8 @@ MonoBehaviour:
   maxFireRate: 100
   defaultSpeed: 20
   maxSpeedValue: 100
-  maxSpeed: 10
+  maxSpeed: 8
   defaultAmmo: 10
   maxAmmo: 100
-  points: 100
-  upgradeCost: 10
+  points: 0
+  upgradeCost: 5

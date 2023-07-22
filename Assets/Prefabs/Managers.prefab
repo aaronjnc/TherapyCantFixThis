@@ -50,22 +50,22 @@ MonoBehaviour:
   MAX_ENEMIES_SPAWNED: 5
   enemyTypes:
   - enemyType: 3
-    speed: 2
-    damage: 3
+    speed: 3
+    damage: 2
     enemySprite: {fileID: 665117359, guid: bb0da18e49fd85941b737b4eadce8690, type: 3}
     animatorController: {fileID: 9100000, guid: f61c872f56258984a942758331c12d3b, type: 2}
   - enemyType: 2
-    speed: 4
-    damage: 1
+    speed: 5
+    damage: 2
     enemySprite: {fileID: -1184098416, guid: b1accb75e7fad7c46b07656e590f2905, type: 3}
     animatorController: {fileID: 9100000, guid: f7208ac93ba529840a4be69021e2400f, type: 2}
   - enemyType: 0
-    speed: 1
-    damage: 4
+    speed: 2
+    damage: 2
     enemySprite: {fileID: -1892148687, guid: 758ec85228fc4524582e7d9fb3627638, type: 3}
     animatorController: {fileID: 9100000, guid: 946e191885cbd7b4db26b17a3f53a7d7, type: 2}
   - enemyType: 1
-    speed: 3
+    speed: 4
     damage: 2
     enemySprite: {fileID: 1527741767, guid: bff32d011a929ec498e2ed25a6f7dadf, type: 3}
     animatorController: {fileID: 9100000, guid: 0a4e25f1b94e9bd49947ada57b090b88, type: 2}
