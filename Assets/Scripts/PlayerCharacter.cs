@@ -11,7 +11,6 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
 {
     InputController controller;
     Rigidbody2D rb;
-    [SerializeField]
     private float speed;
     private Vector3 velocity = Vector3.zero;
     [SerializeField]
@@ -23,23 +22,27 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
     private float maxHealth;
     [SerializeField]
     GameObject bullet;
-    [SerializeField]
     private float bulletSpeed;
     private float speedMod = 1;
     private float accuracy = 0;
-    [SerializeField]
-    private int MAX_AMMO;
+    private int maxAmmo;
     private int ammo;
+    private float fireRate;
 
     // Start is called before the first frame update
     protected override void Awake()
     {
         base.Awake();
         Cursor.visible = true;
+        maxHealth = GameManager.Instance.GetHealth();
+        maxAmmo = GameManager.Instance.GetAmmo();
+        speed = GameManager.Instance.GetSpeed();
+        fireRate = GameManager.Instance.GetFireRate();
+        bulletSpeed = speed;
         health = maxHealth;
         rb = GetComponent<Rigidbody2D>();
         controller = new InputController();
-        ammo = MAX_AMMO;
+        ammo = maxAmmo;
         controller.PlayerCore.Movement.performed += Move;
         controller.PlayerCore.Movement.canceled += StopMove;
         controller.PlayerCore.Movement.Enable();
