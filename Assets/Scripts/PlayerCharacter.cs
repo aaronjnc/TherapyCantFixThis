@@ -11,7 +11,6 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
 {
     InputController controller;
     Rigidbody2D rb;
-    [SerializeField]
     private float speed;
     private Vector3 velocity = Vector3.zero;
     [SerializeField]
@@ -23,17 +22,27 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
     private float maxHealth;
     [SerializeField]
     GameObject bullet;
-    [SerializeField]
     private float bulletSpeed;
-    
+    private float speedMod = 1;
+    private float accuracy = 0;
+    private int maxAmmo;
+    private int ammo;
+    private float fireRate;
+
     // Start is called before the first frame update
     protected override void Awake()
     {
         base.Awake();
         Cursor.visible = true;
+        maxHealth = GameManager.Instance.GetHealth();
+        maxAmmo = GameManager.Instance.GetAmmo();
+        speed = GameManager.Instance.GetSpeed();
+        fireRate = GameManager.Instance.GetFireRate();
+        bulletSpeed = speed;
         health = maxHealth;
         rb = GetComponent<Rigidbody2D>();
         controller = new InputController();
+        ammo = maxAmmo;
         controller.PlayerCore.Movement.performed += Move;
         controller.PlayerCore.Movement.canceled += StopMove;
         controller.PlayerCore.Movement.Enable();
@@ -43,7 +52,8 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
 
     void Move(CallbackContext ctx)
     {
-        rb.velocity = ctx.ReadValue<Vector2>() * speed;
+        Vector3 dir = ctx.ReadValue<Vector2>().normalized;
+        rb.velocity = speed * speedMod * dir;
     }
 
     void StopMove(CallbackContext ctx)
@@ -53,17 +63,23 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
 
     void Attack(CallbackContext ctx)
     {
-        Vector3 mousePos = Mouse.current.position.ReadValue();
-        mousePos.z = Camera.main.nearClipPlane;
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
-        Projectile newBullet = Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Projectile>();
+        if (ammo == 0)
+        {
+            return;
+        }
+        Vector3 mouseScreenPos = new Vector3(Mouse.current.position.x.ReadValue(), Mouse.current.position.y.ReadValue(), 0);
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
+        mouseWorldPos.z = transform.position.z;
         Vector3 dir = mouseWorldPos - transform.position;
-        dir.z = 0;
-        dir.Normalize();
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        float finalAngle = UnityEngine.Random.Range(angle - accuracy, angle + accuracy);
+        Projectile newBullet = Instantiate(bullet, transform.position, Quaternion.Euler(0,0, finalAngle)).GetComponent<Projectile>();
         if (newBullet)
         {
-            newBullet.SetVelocity(dir * bulletSpeed);
+            Vector3 bulletVel = newBullet.transform.right * bulletSpeed + new Vector3(rb.velocity.x, rb.velocity.y, 0);
+            newBullet.SetVelocity(bulletVel);
         }
+        ammo--;
     }
 
     private void FixedUpdate()
@@ -75,12 +91,33 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
 		cam.transform.position = Vector3.SmoothDamp(cam.transform.position, destination, ref velocity, dampTime);
     }
 
-    public void HitPlayer(float damage)
+    public void HitPlayer(EnemyManager.EnemyStruct enemyAttack)
     {
-        health -= damage;
+        health -= enemyAttack.damage;
         if (health <= 0)
         {
+            controller.Disable();
             Destroy(gameObject);
         }
+        switch (enemyAttack.enemyType)
+        {
+            case EnemyManager.EnemyType.Sadness:
+                speedMod *= .5f;
+                break;
+            case EnemyManager.EnemyType.Anger:
+                accuracy = 30;
+                break;
+            case EnemyManager.EnemyType.Happiness:
+                cam.orthographicSize = 5;
+                break;
+            case EnemyManager.EnemyType.Fear:
+                EnemyManager.Instance.SetFearful(true);
+                break;
+        }
+    }
+
+    public void AddAmmo()
+    {
+        ammo++;
     }
 }
