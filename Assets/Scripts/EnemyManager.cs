@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class EnemyManager : Singleton<EnemyManager>
@@ -31,7 +32,8 @@ public class EnemyManager : Singleton<EnemyManager>
         public EnemyType enemyType;
         public float speed;
         public float damage;
-        public Material material;
+        public Sprite enemySprite;
+        public AnimatorController animatorController;
     } 
 
     public enum EnemyType
@@ -60,10 +62,14 @@ public class EnemyManager : Singleton<EnemyManager>
 
     void SpawnEnemy()
     {
+        if (character == null)
+        {
+            return;
+        }
         float distance = UnityEngine.Random.Range(MIN_DISTANCE, MAX_DISTANCE);
         float angle = UnityEngine.Random.Range(0, 360);
         Vector3 pos = new Vector3(distance * Mathf.Sin(angle), distance * Mathf.Cos(angle), 0);
-        GameObject newEnemy = Instantiate(enemyPrefab, pos, Quaternion.identity);
+        GameObject newEnemy = Instantiate(enemyPrefab, pos + character.transform.position, Quaternion.identity);
         BaseEnemy enemyScript = newEnemy.GetComponent<BaseEnemy>();
         enemies.Add(enemyScript);
         enemyScript.SetInfo(character, enemyTypes[UnityEngine.Random.Range(0, enemyTypes.Count)]);

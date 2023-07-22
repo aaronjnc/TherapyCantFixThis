@@ -5,12 +5,18 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.InputSystem.InputAction;
+using UnityEngine.UI;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerCharacter : Singleton<PlayerCharacter>
 {
     InputController controller;
     Rigidbody2D rb;
+    SpriteRenderer spriteRenderer;
+    [SerializeField]
+    SpriteRenderer armRenderer;
     private float speed;
     private Vector3 velocity = Vector3.zero;
     [SerializeField]
@@ -18,7 +24,6 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
     [SerializeField]
     Camera cam;
     private float health;
-    [SerializeField]
     private float maxHealth;
     [SerializeField]
     GameObject bullet;
@@ -28,6 +33,18 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
     private int maxAmmo;
     private int ammo;
     private float fireRate;
+    [SerializeField]
+    private Slider healthSlider;
+    [SerializeField]
+    private TMP_Text ammoText;
+    [SerializeField]
+    private TMP_Text pointsText;
+    [SerializeField]
+    private GameObject deathScreen;
+    [SerializeField]
+    private GameObject playerHUD;
+    [SerializeField]
+    private Button sameStats;
 
     // Start is called before the first frame update
     protected override void Awake()
@@ -36,13 +53,19 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
         Cursor.visible = true;
         maxHealth = GameManager.Instance.GetHealth();
         maxAmmo = GameManager.Instance.GetAmmo();
-        speed = GameManager.Instance.GetSpeed();
+        speed = GameManager.Instance.GetWalkSpeed();
         fireRate = GameManager.Instance.GetFireRate();
-        bulletSpeed = speed;
+        bulletSpeed = GameManager.Instance.GetMaxSpeed();
         health = maxHealth;
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         controller = new InputController();
         ammo = maxAmmo;
+        healthSlider.maxValue = maxHealth;
+        healthSlider.minValue = 0;
+        healthSlider.value = health;
+        UpdateAmmo();
+        UpdatePoints();
         controller.PlayerCore.Movement.performed += Move;
         controller.PlayerCore.Movement.canceled += StopMove;
         controller.PlayerCore.Movement.Enable();
@@ -53,6 +76,16 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
     void Move(CallbackContext ctx)
     {
         Vector3 dir = ctx.ReadValue<Vector2>().normalized;
+        if (dir.x < 0)
+        {
+            spriteRenderer.flipX = true;
+            armRenderer.flipX = true;
+        }
+        else
+        {
+            spriteRenderer.flipX = false;
+            armRenderer.flipX = false;
+        }
         rb.velocity = speed * speedMod * dir;
     }
 
@@ -80,6 +113,7 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
             newBullet.SetVelocity(bulletVel);
         }
         ammo--;
+        UpdateAmmo();
     }
 
     private void FixedUpdate()
@@ -94,10 +128,23 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
     public void HitPlayer(EnemyManager.EnemyStruct enemyAttack)
     {
         health -= enemyAttack.damage;
+        healthSlider.value = health;
         if (health <= 0)
         {
             controller.Disable();
-            Destroy(gameObject);
+            Time.timeScale = 0;
+            if (GameManager.Instance.GetPoints() < GameManager.Instance.GetTotalCost())
+            {
+                sameStats.interactable = false;
+            }
+            else
+            {
+                sameStats.interactable = true;
+            }
+            playerHUD.SetActive(false);
+            deathScreen.SetActive(true);
+            Destroy(spriteRenderer);
+            Destroy(armRenderer);
         }
         switch (enemyAttack.enemyType)
         {
@@ -119,5 +166,36 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
     public void AddAmmo()
     {
         ammo++;
+        UpdateAmmo();
+    }
+
+    public void UpdateAmmo()
+    {
+        ammoText.text = "Ammo: " + ammo + "/" + maxAmmo;
+    }
+
+    public void UpdatePoints()
+    {
+        pointsText.text = "Points: " + GameManager.Instance.GetPoints();
+    }
+
+    public void Therapy()
+    {
+        GameManager.Instance.ResetValues();
+        Time.timeScale = 1;
+        SceneManager.LoadScene(1);
+    }
+
+    public void RunItBack()
+    {
+        GameManager.Instance.SameStats();
+        Time.timeScale = 1;
+        SceneManager.LoadScene(2);
+    }
+
+    public void MainMenu()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0);
     }
 }

@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4815847811160909176
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4815847811160909178}
+  - component: {fileID: 4815847811160909179}
+  m_Layer: 0
+  m_Name: Managers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4815847811160909178
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4815847811160909176}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.196824, y: -0.48334128, z: -0.18748784}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4815847811160909179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4815847811160909176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68d8f0d197da15744aba5193fe4f408c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 2336308098238659361, guid: ce97872be29065e489221d85724a568d, type: 3}
+  MIN_DISTANCE: 10
+  MAX_DISTANCE: 15
+  enemyTypes:
+  - enemyType: 3
+    speed: 2
+    damage: 3
+    enemySprite: {fileID: 665117359, guid: bb0da18e49fd85941b737b4eadce8690, type: 3}
+    animatorController: {fileID: 9100000, guid: f61c872f56258984a942758331c12d3b, type: 2}
+  - enemyType: 2
+    speed: 4
+    damage: 1
+    enemySprite: {fileID: -1184098416, guid: b1accb75e7fad7c46b07656e590f2905, type: 3}
+    animatorController: {fileID: 9100000, guid: f7208ac93ba529840a4be69021e2400f, type: 2}
+  - enemyType: 0
+    speed: 1
+    damage: 4
+    enemySprite: {fileID: -1892148687, guid: 758ec85228fc4524582e7d9fb3627638, type: 3}
+    animatorController: {fileID: 9100000, guid: 946e191885cbd7b4db26b17a3f53a7d7, type: 2}
+  - enemyType: 1
+    speed: 3
+    damage: 2
+    enemySprite: {fileID: 1527741767, guid: bff32d011a929ec498e2ed25a6f7dadf, type: 3}
+    animatorController: {fileID: 9100000, guid: 0a4e25f1b94e9bd49947ada57b090b88, type: 2}
+  MIN_SPAWN_TIME: 2
+  MAX_SPAWN_TIME: 5
