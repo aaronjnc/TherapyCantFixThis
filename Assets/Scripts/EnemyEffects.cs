@@ -7,8 +7,6 @@ using static EnemyManager;
 
 public class EnemyEffects : MonoBehaviour
 {
-    [SerializeField]
-    private float minValue = -50;
     [SerializeField] 
     private float maxValue = 50;
 
@@ -22,9 +20,7 @@ public class EnemyEffects : MonoBehaviour
         public EnemyType enemyType;
         public float currentValue;
         public Slider positiveSlider;
-        public Slider negativeSlider;
         public float defaultEffect;
-        public float minEffect;
         public float maxEffect;
         public float effectChange;
         public EnemyType effectedEnemyType;
@@ -36,7 +32,6 @@ public class EnemyEffects : MonoBehaviour
         foreach (EffectStruct effect in effects)
         {
             effect.positiveSlider.maxValue = maxValue;
-            effect.negativeSlider.maxValue = maxValue;
             effectStructs.Add(effect.enemyType, effect);
         }
     }
@@ -54,17 +49,8 @@ public class EnemyEffects : MonoBehaviour
     private void EditValues(EnemyType enemyType, float modifier)
     {
         EffectStruct enemyEffectStruct = effectStructs[enemyType];
-        enemyEffectStruct.currentValue = Mathf.Clamp(enemyEffectStruct.currentValue + enemyEffectStruct.effectChange * modifier, minValue, maxValue);
-        if (enemyEffectStruct.currentValue < 0)
-        {
-            enemyEffectStruct.positiveSlider.value = Mathf.Abs(enemyEffectStruct.currentValue);
-            enemyEffectStruct.negativeSlider.value = 0;
-        }
-        else
-        {
-            enemyEffectStruct.negativeSlider.value = Mathf.Abs(enemyEffectStruct.currentValue);
-            enemyEffectStruct.positiveSlider.value = 0;
-        }
+        enemyEffectStruct.currentValue = Mathf.Clamp(enemyEffectStruct.currentValue + enemyEffectStruct.effectChange * modifier, 0, maxValue);
+        enemyEffectStruct.positiveSlider.value = Mathf.Abs(enemyEffectStruct.currentValue);
         effectStructs[enemyType] = enemyEffectStruct;
     }
 
@@ -72,13 +58,13 @@ public class EnemyEffects : MonoBehaviour
     {
         EffectStruct enemyEffectStruct = effectStructs[enemyType];
         float effectValue = 0;
-        if (enemyEffectStruct.currentValue < 0)
+        if (enemyEffectStruct.maxEffect > enemyEffectStruct.defaultEffect)
         {
-            effectValue = enemyEffectStruct.defaultEffect - (enemyEffectStruct.currentValue / maxValue) * (enemyEffectStruct.defaultEffect - enemyEffectStruct.minEffect);
+            effectValue = enemyEffectStruct.defaultEffect + (enemyEffectStruct.currentValue / maxValue) * (enemyEffectStruct.maxEffect - enemyEffectStruct.defaultEffect);
         }
         else
         {
-            effectValue = enemyEffectStruct.defaultEffect + (enemyEffectStruct.currentValue / maxValue) * (enemyEffectStruct.maxEffect - enemyEffectStruct.defaultEffect);
+            effectValue = enemyEffectStruct.defaultEffect - (enemyEffectStruct.currentValue / maxValue) * (enemyEffectStruct.defaultEffect - enemyEffectStruct.maxEffect);
         }
         switch (enemyType)
         {
