@@ -19,6 +19,8 @@ public class GameManager : Singleton<GameManager>
     private float defaultSpeed = 0;
     private float currentSpeed = 0;
     [SerializeField]
+    private float maxSpeedValue = 0;
+    [SerializeField]
     private float maxSpeed = 0;
     [SerializeField]
     private int defaultAmmo = 0;
@@ -33,6 +35,8 @@ public class GameManager : Singleton<GameManager>
 
     private const int MIN_VALUE = 1;
 
+    private int totalCost = 0;
+
     protected override void Awake()
     {
         base.Awake();
@@ -46,6 +50,7 @@ public class GameManager : Singleton<GameManager>
         SetFireRate(defaultFireRate);
         SetSpeed(defaultSpeed);
         SetAmmo(defaultAmmo);
+        totalCost = 0;
     }
 
     public float GetHealth()
@@ -122,7 +127,7 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
-            if (speed == maxSpeed)
+            if (speed == maxSpeedValue)
             {
                 canChange = false;
             }
@@ -155,6 +160,7 @@ public class GameManager : Singleton<GameManager>
     public int AdjustPoints(int dir)
     {
         points += dir * upgradeCost;
+        totalCost -= dir * upgradeCost;
         return points;
     }
 
@@ -186,5 +192,30 @@ public class GameManager : Singleton<GameManager>
     public float GetDefaultAmmo()
     {
         return defaultAmmo;
+    }
+
+    public void KillEnemy()
+    {
+        points++;
+    }
+
+    public int GetTotalCost()
+    {
+        return totalCost;
+    }
+
+    public void SameStats()
+    {
+        points -= totalCost;
+    }
+
+    public float GetWalkSpeed()
+    {
+        return (currentSpeed / maxSpeedValue) * maxSpeed;
+    }
+
+    public float GetMaxSpeed()
+    {
+        return maxSpeed;
     }
 }
