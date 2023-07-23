@@ -37,7 +37,6 @@ public class Projectile : MonoBehaviour
         {
             return;
         }
-        PlayerCharacter.Instance.AddAmmo();
         GameManager.Instance.KillEnemy();
         PlayerCharacter.Instance.UpdatePoints();
         Destroy(collision.gameObject);

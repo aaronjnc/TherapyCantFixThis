@@ -27,11 +27,11 @@ public class TherapistScript : MonoBehaviour
 
     [Header("Fire Rate")]
     [SerializeField]
-    private Button removeFireRate;
+    private Button removeReloadRate;
     [SerializeField]
-    private Button addFireRate;
+    private Button addReloadRate;
     [SerializeField]
-    private TMP_Text fireRateText;
+    private TMP_Text reloadRateText;
 
     [Header("Speed")]
     [SerializeField]
@@ -55,7 +55,7 @@ public class TherapistScript : MonoBehaviour
     {
         gameManager = GameManager.Instance;
         healthText.text = gameManager.GetHealth() + "";
-        fireRateText.text = gameManager.GetFireRate() + "";
+        reloadRateText.text = gameManager.GetFireRate() + "";
         speedText.text = gameManager.GetSpeed() + "";
         ammoText.text = gameManager.GetAmmo() + "";
         pointsText.text = "Points: " + gameManager.GetPoints();
@@ -82,14 +82,14 @@ public class TherapistScript : MonoBehaviour
             addAmmo.interactable = false;
             addSpeed.interactable = false;
             addHealth.interactable = false;
-            addFireRate.interactable = false;
+            addReloadRate.interactable = false;
         }
         else if (points >= gameManager.GetUpgradeCost() && val >= 0)
         {
             addAmmo.interactable = true;
             addSpeed.interactable = true;
             addHealth.interactable = true;
-            addFireRate.interactable = true;
+            addReloadRate.interactable = true;
         }
     }
 
@@ -118,23 +118,23 @@ public class TherapistScript : MonoBehaviour
 
     public void AdjustFireRate(int val)
     {
-        bool canChange = gameManager.SetFireRate(gameManager.GetFireRate() + val);
-        fireRateText.text = gameManager.GetFireRate() + "";
+        bool canChange = gameManager.SetReloadRate(gameManager.GetFireRate() + val);
+        reloadRateText.text = gameManager.GetFireRate() + "";
         if (!canChange)
         {
             if (val < 0)
             {
-                removeFireRate.interactable = false;
+                removeReloadRate.interactable = false;
             }
             else
             {
-                addFireRate.interactable = true;
+                addReloadRate.interactable = true;
             }
         }
         else
         {
-            removeFireRate.interactable = true;
-            addFireRate.interactable = true;
+            removeReloadRate.interactable = true;
+            addReloadRate.interactable = true;
         }
         AdjustPoints(-1 * val);
     }
@@ -209,14 +209,14 @@ public class TherapistScript : MonoBehaviour
         float defaultFireRate = gameManager.GetDefaultFireRate();
         if (gameManager.GetFireRate() > defaultFireRate)
         {
-            while (gameManager.GetFireRate() != defaultFireRate && removeFireRate.IsInteractable())
+            while (gameManager.GetFireRate() != defaultFireRate && removeReloadRate.IsInteractable())
             {
                 AdjustFireRate(-1);
             }
         }
         else
         {
-            while (gameManager.GetFireRate() != defaultFireRate && addFireRate.IsInteractable())
+            while (gameManager.GetFireRate() != defaultFireRate && addReloadRate.IsInteractable())
             {
                 AdjustFireRate(1);
             }

@@ -46,8 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultHealth: 10
   maxHealth: 100
-  defaultFireRate: 10
-  maxFireRate: 100
+  defaultReloadRate: 10
+  maxReloadRate: 100
+  maxReloadTime: 3
   defaultSpeed: 20
   maxSpeedValue: 100
   maxSpeed: 8

@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 8907444}
   - component: {fileID: 8907443}
   m_Layer: 5
-  m_Name: DecreaseFireRate
+  m_Name: DecreaseReloadRate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -829,7 +829,7 @@ GameObject:
   - component: {fileID: 679593048}
   - component: {fileID: 679593047}
   m_Layer: 5
-  m_Name: CurrentFireRate
+  m_Name: CurrentReloadRate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2387,7 +2387,7 @@ GameObject:
   - component: {fileID: 1172026020}
   - component: {fileID: 1172026019}
   m_Layer: 5
-  m_Name: FireRate
+  m_Name: ReloadRate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2437,7 +2437,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Fire Rate:'
+  m_text: 'Reload:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4100,7 +4100,7 @@ GameObject:
   - component: {fileID: 1599293764}
   - component: {fileID: 1599293763}
   m_Layer: 5
-  m_Name: AddFireRate
+  m_Name: AddReloadRate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5436,9 +5436,9 @@ MonoBehaviour:
   removeHealth: {fileID: 1586721732}
   addHealth: {fileID: 1210962388}
   healthText: {fileID: 1252630490}
-  removeFireRate: {fileID: 8907443}
-  addFireRate: {fileID: 1599293763}
-  fireRateText: {fileID: 679593047}
+  removeReloadRate: {fileID: 8907443}
+  addReloadRate: {fileID: 1599293763}
+  reloadRateText: {fileID: 679593047}
   removeSpeed: {fileID: 1328888269}
   addSpeed: {fileID: 888241223}
   speedText: {fileID: 1038441482}

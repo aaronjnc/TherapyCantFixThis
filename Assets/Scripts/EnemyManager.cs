@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using UnityEditor.Animations;
 using UnityEngine;
 
 public class EnemyManager : Singleton<EnemyManager>
@@ -38,7 +37,7 @@ public class EnemyManager : Singleton<EnemyManager>
         public float speed;
         public float damage;
         public Sprite enemySprite;
-        public AnimatorController animatorController;
+        public RuntimeAnimatorController animatorController;
     } 
 
     public enum EnemyType

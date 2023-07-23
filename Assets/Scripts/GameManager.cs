@@ -12,12 +12,14 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private float maxHealth = 0;
 
-    [Header("Fire Rate")]
+    [Header("Reload Rate")]
     [SerializeField]
-    private float defaultFireRate = 0;
-    private float currentFireRate = 0;
+    private float defaultReloadRate = 0;
+    private float currentReloadRate = 0;
     [SerializeField]
-    private float maxFireRate = 0;
+    private float maxReloadRate = 0;
+    [SerializeField]
+    private float maxReloadTime = 0;
 
     [Header("Speed")]
     [SerializeField]
@@ -55,7 +57,7 @@ public class GameManager : Singleton<GameManager>
     public void ResetValues()
     {
         SetHealth(defaultHealth);
-        SetFireRate(defaultFireRate);
+        SetReloadRate(defaultReloadRate);
         SetSpeed(defaultSpeed);
         SetAmmo(defaultAmmo);
         totalCost = 0;
@@ -68,7 +70,7 @@ public class GameManager : Singleton<GameManager>
 
     public float GetFireRate()
     {
-        return currentFireRate;
+        return currentReloadRate;
     }
 
     public float GetSpeed()
@@ -102,24 +104,24 @@ public class GameManager : Singleton<GameManager>
         return canChange;
     }
 
-    public bool SetFireRate(float fireRate)
+    public bool SetReloadRate(float reloadRate)
     {
         bool canChange = true;
-        if (fireRate < currentFireRate)
+        if (reloadRate < currentReloadRate)
         {
-            if (fireRate == MIN_VALUE)
+            if (reloadRate == MIN_VALUE)
             {
                 canChange = false;
             }
         }
         else
         {
-            if (fireRate == maxFireRate)
+            if (reloadRate == maxReloadRate)
             {
                 canChange = false;
             }
         }
-        currentFireRate = fireRate;
+        currentReloadRate = reloadRate;
         return canChange;
     }
 
@@ -189,7 +191,7 @@ public class GameManager : Singleton<GameManager>
 
     public float GetDefaultFireRate()
     {
-        return defaultFireRate;
+        return defaultReloadRate;
     }
 
     public float GetDefaultSpeed()
@@ -225,5 +227,10 @@ public class GameManager : Singleton<GameManager>
     public float GetMaxSpeed()
     {
         return maxSpeed;
+    }
+
+    public float GetReloadTime()
+    {
+        return ((maxReloadRate - currentReloadRate) / maxReloadRate) * maxReloadTime;
     }
 }

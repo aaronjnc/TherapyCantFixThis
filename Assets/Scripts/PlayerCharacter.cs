@@ -46,8 +46,11 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
     [SerializeField]
     private GameObject playerHUD;
     [SerializeField]
+    private GameObject pauseMenu;
+    [SerializeField]
     private Button sameStats;
     private bool bCanShoot = true;
+    private float reloadTime = 0;
 
     // Start is called before the first frame update
     protected override void Awake()
@@ -65,6 +68,7 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
         enemyEffects = GetComponent<EnemyEffects>();
         controller = new InputController();
         ammo = maxAmmo;
+        reloadTime = GameManager.Instance.GetReloadTime();
         healthSlider.maxValue = maxHealth;
         healthSlider.minValue = 0;
         healthSlider.value = health;
@@ -75,6 +79,22 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
         controller.PlayerCore.Movement.Enable();
         controller.PlayerCore.Attack.performed += Attack;
         controller.PlayerCore.Attack.Enable();
+        controller.PlayerCore.Pause.performed += Pause;
+        controller.PlayerCore.Pause.Enable();
+    }
+
+    void Pause(CallbackContext ctx)
+    {
+        if (Time.timeScale == 0)
+        {
+            Time.timeScale = 1;
+            pauseMenu.SetActive(false);
+        }
+        else
+        {
+            Time.timeScale = 0;
+            pauseMenu.SetActive(true);
+        }
     }
 
     void Move(CallbackContext ctx)
@@ -102,6 +122,7 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
     {
         if (ammo == 0)
         {
+            StartCoroutine("ReloadRate");
             return;
         }
         Vector3 mouseScreenPos = new Vector3(Mouse.current.position.x.ReadValue(), Mouse.current.position.y.ReadValue(), 0);
@@ -117,6 +138,13 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
             newBullet.SetVelocity(bulletVel);
         }
         ammo--;
+        UpdateAmmo();
+    }
+
+    IEnumerator ReloadRate()
+    {
+        yield return new WaitForSeconds(reloadTime);
+        ammo = maxAmmo;
         UpdateAmmo();
     }
 
