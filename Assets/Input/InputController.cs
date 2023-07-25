@@ -35,6 +35,24 @@ public partial class @InputController : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""6640d45e-1116-48db-81bb-91a9ba3e862e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""7130154b-4d5d-460c-a1b8-de8a56cc440b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -92,6 +110,28 @@ public partial class @InputController : IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f58cff70-25d6-4294-9172-57ee79f3389e"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""147a55bb-7374-47ad-91a7-277cb3c4e5fe"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -101,6 +141,8 @@ public partial class @InputController : IInputActionCollection2, IDisposable
         // PlayerCore
         m_PlayerCore = asset.FindActionMap("PlayerCore", throwIfNotFound: true);
         m_PlayerCore_Movement = m_PlayerCore.FindAction("Movement", throwIfNotFound: true);
+        m_PlayerCore_Attack = m_PlayerCore.FindAction("Attack", throwIfNotFound: true);
+        m_PlayerCore_Pause = m_PlayerCore.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -161,11 +203,15 @@ public partial class @InputController : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerCore;
     private IPlayerCoreActions m_PlayerCoreActionsCallbackInterface;
     private readonly InputAction m_PlayerCore_Movement;
+    private readonly InputAction m_PlayerCore_Attack;
+    private readonly InputAction m_PlayerCore_Pause;
     public struct PlayerCoreActions
     {
         private @InputController m_Wrapper;
         public PlayerCoreActions(@InputController wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_PlayerCore_Movement;
+        public InputAction @Attack => m_Wrapper.m_PlayerCore_Attack;
+        public InputAction @Pause => m_Wrapper.m_PlayerCore_Pause;
         public InputActionMap Get() { return m_Wrapper.m_PlayerCore; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -178,6 +224,12 @@ public partial class @InputController : IInputActionCollection2, IDisposable
                 @Movement.started -= m_Wrapper.m_PlayerCoreActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_PlayerCoreActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_PlayerCoreActionsCallbackInterface.OnMovement;
+                @Attack.started -= m_Wrapper.m_PlayerCoreActionsCallbackInterface.OnAttack;
+                @Attack.performed -= m_Wrapper.m_PlayerCoreActionsCallbackInterface.OnAttack;
+                @Attack.canceled -= m_Wrapper.m_PlayerCoreActionsCallbackInterface.OnAttack;
+                @Pause.started -= m_Wrapper.m_PlayerCoreActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_PlayerCoreActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_PlayerCoreActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_PlayerCoreActionsCallbackInterface = instance;
             if (instance != null)
@@ -185,6 +237,12 @@ public partial class @InputController : IInputActionCollection2, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
+                @Attack.started += instance.OnAttack;
+                @Attack.performed += instance.OnAttack;
+                @Attack.canceled += instance.OnAttack;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -192,5 +250,7 @@ public partial class @InputController : IInputActionCollection2, IDisposable
     public interface IPlayerCoreActions
     {
         void OnMovement(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }
