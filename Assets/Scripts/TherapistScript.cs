@@ -165,7 +165,7 @@ public class TherapistScript : MonoBehaviour
     public void AdjustAmmo(int val)
     {
         bool canChange = gameManager.SetAmmo(gameManager.GetAmmo() + val);
-        speedText.text = gameManager.GetAmmo() + "";
+        ammoText.text = gameManager.GetAmmo() + "";
         if (!canChange)
         {
             if (val < 0)
