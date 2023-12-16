@@ -1701,7 +1701,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3174287549418373160}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1749,7 +1749,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7751621fa6f7e904bb904b1d9fcda89c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cdf39a0974eff5f4b8d0cf7afba77ec5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2433,7 +2433,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5391356626805820111}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.7243505, y: 1.9633893, z: 0.033578016}
+  m_LocalPosition: {x: 2.7243505, y: 0.847, z: 0.033578016}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2861,6 +2861,7 @@ GameObject:
   - component: {fileID: 6166596492441024877}
   - component: {fileID: 1411306264967872098}
   - component: {fileID: 6095400887230732177}
+  - component: {fileID: 154749673309653586}
   m_Layer: 3
   m_Name: Body
   m_TagString: Untagged
@@ -2876,7 +2877,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6166596492441024878}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.7243505, y: 1.9633893, z: 0.033578016}
+  m_LocalPosition: {x: 2.7243505, y: 1.9633893, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2925,7 +2926,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 97390140, guid: be2ee2d4e0e5310449a068a22e9f9009, type: 3}
+  m_Sprite: {fileID: -905402048, guid: 9fa3f50dd2f820e409e763d278ef7c64, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2980,6 +2981,7 @@ MonoBehaviour:
   playerHUD: {fileID: 6365729152038829605}
   pauseMenu: {fileID: 2795715185418868895}
   sameStats: {fileID: 5265064912431073684}
+  defaultSprite: {fileID: -905402048, guid: 9fa3f50dd2f820e409e763d278ef7c64, type: 3}
 --- !u!70 &1411306264967872098
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -3042,6 +3044,26 @@ MonoBehaviour:
     effectChange: 10
     effectedEnemyType: 3
     secondaryEnemyEffect: 2
+--- !u!95 &154749673309653586
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6166596492441024878}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 16ad6316c45df264cac17824e6188cea, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &6233079450716942254
 GameObject:
   m_ObjectHideFlags: 0
