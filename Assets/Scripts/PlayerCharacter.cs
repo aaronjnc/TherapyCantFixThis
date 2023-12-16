@@ -17,6 +17,7 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
     Rigidbody2D rb;
     EnemyEffects enemyEffects;
     SpriteRenderer spriteRenderer;
+    Animator animator;
     [SerializeField]
     SpriteRenderer armRenderer;
     private float speed;
@@ -49,6 +50,8 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
     private GameObject pauseMenu;
     [SerializeField]
     private Button sameStats;
+    [SerializeField]
+    private Sprite defaultSprite;
     private bool bCanShoot = true;
     private float reloadTime = 0;
 
@@ -66,8 +69,10 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         enemyEffects = GetComponent<EnemyEffects>();
+        animator = GetComponent<Animator>();
         controller = new InputController();
         ammo = maxAmmo;
+        animator.enabled = false;
         reloadTime = GameManager.Instance.GetReloadTime();
         healthSlider.maxValue = maxHealth;
         healthSlider.minValue = 0;
@@ -100,6 +105,7 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
     void Move(CallbackContext ctx)
     {
         Vector3 dir = ctx.ReadValue<Vector2>().normalized;
+        animator.enabled = true;
         if (dir.x < 0)
         {
             spriteRenderer.flipX = true;
@@ -115,6 +121,8 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
 
     void StopMove(CallbackContext ctx)
     {
+        animator.enabled = false;
+        spriteRenderer.sprite = defaultSprite;
         rb.velocity = Vector3.zero;
     }
 
