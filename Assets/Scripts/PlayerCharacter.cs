@@ -239,4 +239,9 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
     {
         accuracy = newAccuracy;
     }
+
+    private void OnDestroy()
+    {
+        controller.PlayerCore.Disable();
+    }
 }

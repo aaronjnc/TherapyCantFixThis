@@ -29,6 +29,7 @@ public class EnemyManager : Singleton<EnemyManager>
     [SerializeField]
     private float fearSpawnTime;
     bool bFearCouritineRunning = false;
+    Vector2 SpawnArea;
 
     [Serializable]
     public struct EnemyStruct
@@ -55,6 +56,7 @@ public class EnemyManager : Singleton<EnemyManager>
         {
             enemyMap.Add(enemy.enemyType, enemy);
         }
+        SpawnArea = MapGenerator.Instance.GetMapSize();
     }
 
     private void Start()
@@ -73,6 +75,11 @@ public class EnemyManager : Singleton<EnemyManager>
         float distance = UnityEngine.Random.Range(MIN_DISTANCE, MAX_DISTANCE);
         float angle = UnityEngine.Random.Range(0, 360);
         Vector3 pos = new Vector3(distance * Mathf.Sin(angle), distance * Mathf.Cos(angle), 0);
+        Vector3 spawnPos = pos + character.transform.position;
+        if (Mathf.Abs(spawnPos.x) > SpawnArea.x / 2 || Mathf.Abs(spawnPos.y) > SpawnArea.y / 2)
+        {
+            return;
+        }
         GameObject newEnemy = Instantiate(enemyPrefab, pos + character.transform.position, Quaternion.identity);
         BaseEnemy enemyScript = newEnemy.GetComponent<BaseEnemy>();
         enemies.Add(enemyScript);
